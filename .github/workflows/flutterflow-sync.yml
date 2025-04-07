@@ -1,0 +1,28 @@
+on:
+workflow_dispatch:
+push:
+ paths:
+   - 'frontend/flutterflow/exported_code/**'
+ branches: [ main, develop ]
+
+jobs:
+process-export:
+ runs-on: ubuntu-latest
+ steps:
+ - uses: actions/checkout@v3
+ 
+ - name: Check for Flutter export
+   run: |
+     if [ -d \"frontend/flutterflow/exported_code\" ]; then
+       echo \"FlutterFlow export found. Processing...\"
+       # Additional steps to process the export can be added here
+     else
+       echo \"No FlutterFlow export found.\"
+       exit 0
+     fi
+     
+ - name: Run Flutter analyze (optional)
+   if: ${{ false }}  # Disabled by default as FlutterFlow exports may need adjustments
+   run: |
+     flutter analyze frontend/flutterflow/exported_code
+" > .github/workflows/flutterflow-sync.yml
