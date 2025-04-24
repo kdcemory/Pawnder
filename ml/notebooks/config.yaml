@@ -1,0 +1,207 @@
+# CVAT configuration for downloading annotations
+cvat:
+  # Authentication credentials for CVAT
+  auth:
+    username: "admin"  # Your CVAT username
+    password: "Wesleypants011$"  # Your CVAT password
+  
+  # CVAT server URL
+  server: "http://localhost:8080"
+  
+  # Projects to download annotations from
+  projects:
+    - id: 1  # CVAT project ID for Stanford Dog Pose dataset
+      name: "stanford_dog_pose"
+    - id: 2  # CVAT project ID for your personal dataset
+      name: "personal_dataset"
+
+# Data directory structure configuration
+data:
+  # Base directory for all project files
+  base_dir: "/content/drive/MyDrive/Colab Notebooks/Pawnder"
+  
+  # Directory names for various data types
+  raw_data_dir: "Data/Raw"
+  videos_dir: "Data/Raw/personal_dataset/videos"
+  processed_data_dir: "Data/processed"
+  annotations_dir: "Data/annotations"
+  original_pose_annotations_dir: "Data/Raw/stanford_annotations"
+  images_dir: "Data/Raw/personal_dataset/images"
+  stanford_dir: "Data/Raw/stanford_dog_pose"
+  interim_dir: "Data/interim"
+  matrix_dir: "Data/Matrix"
+  augmented_dir: "Data/augmented"
+  models_dir: "Models"
+  
+  # Dataset split ratios
+  train_split: 0.8  # 80% of data for training
+  val_split: 0.1  # 10% of data for validation
+  test_split: 0.1  # 10% of data for testing
+
+# Model configuration
+model:
+  # Image size for model input (height, width, channels)
+  image_size: [224, 224, 3]
+  
+  # Training hyperparameters
+  batch_size: 32
+  learning_rate: 0.001
+  dropout_rate: 0.5
+  early_stopping_patience: 5
+  
+  # Backbone model for transfer learning
+  backbone: "mobilenetv2"  # Options: mobilenetv2, resnet50, efficientnetb0
+
+# Training configuration
+training:
+  # Directories for saving model checkpoints and logs
+  checkpoint_dir: "Models/checkpoints"
+  logs_dir: "Models/logs"
+  
+  # Data augmentation settings
+  augmentation:
+    enable: true
+    rotation_range: 20
+    width_shift_range: 0.2
+    height_shift_range: 0.2
+    zoom_range: 0.2
+    horizontal_flip: true
+
+# Inference configuration
+inference:
+  # Thresholds for prediction confidence
+  confidence_threshold: 0.6  # Minimum confidence to consider a prediction valid
+  behavior_threshold: 0.5  # Threshold for behavioral indicators
+  
+  # Output directory for predictions
+  output_dir: "Data/processed/predictions"
+
+# AWS configuration for hybrid environment
+aws:
+  region: "us-east-1"
+  bucket: "pawnder-media-storage"
+  ec2_instance: "pawnder-model-training"
+  use_spot: true
+  data_path: "s3://pawnder-media-storage/training"
+  models_path: "s3://pawnder-media-storage/models"
+  results_path: "s3://pawnder-media-storage/results"
+
+# Emotion mapping configuration
+emotions:
+  # Mapping from old to new categories
+  mapping:
+    "Happy or Playful": "Happy/Playful"
+    "Relaxed": "Relaxed"
+    "Submissive": "Submissive/Appeasement"
+    "Excited": "Happy/Playful"
+    "Drowsy or Bored": "Relaxed"
+    "Curious or Confused": "Curiosity/Alertness"
+    "Confident or Alert": "Curiosity/Alertness"
+    "Jealous": "Stressed"
+    "Stressed": "Stressed"
+    "Frustrated": "Stressed"
+    "Unsure or Uneasy": "Fearful/Anxious"
+    "Possessive, Territorial, Dominant": "Fearful/Anxious"
+    "Fear or Aggression": "Aggressive/Threatening"
+    "Pain": "Stressed"
+  
+  # Secondary phrases for each primary emotion
+  secondary_phrases:
+    "Happy/Playful":
+      - "Play with me, please."
+      - "Give me some attention"
+      - "Please, I'm a good dog"
+      - "I love you, I love you, I love you"
+      - "I'm friendly"
+      - "I'm ready"
+      - "More please"
+      - "I love this"
+      - "Don't stop"
+      - "This couch is perfect"
+      - "Ball! Ball! Ball! BALL!"
+      - "Again! Let's do it again!"
+      - "I'm so excited!"
+      - "Chase me if you can!"
+      - "Zoomies time!"
+      - "Best day ever!"
+      - "Let's go to the park!"
+      - "Your home!"
+    
+    "Relaxed":
+      - "ZZZzzzz"
+      - "Just relaxing"
+      - "Nap time"
+      - "Just 5 more minutes"
+      - "Belly rubs please"
+      - "I love nap o'clock"
+      - "Sunbeam feels amazing"
+      - "Food? Im listening"
+      - "This is my happy spot"
+      - "Sigh… life is good"
+      - "Mmm, in my comfy spot"
+      - "Chilling out relaxing"
+    
+    "Submissive/Appeasement":
+      - "I'm friendly"
+      - "Please like me"
+      - "Can we be friends"
+      - "Pretty please"
+      - "I'll do whatever you say"
+      - "Did I do something wrong"
+      - "Please don't be mad"
+      - "You're the boss"
+      - "Im a good dog, I promise"
+      - "We're cool, right?"
+      - "I'm sorry if I messed up"
+      - "Just checking we're ok"
+    
+    "Curiosity/Alertness":
+      - "Whatcha Doing?"
+      - "Who's there?"
+      - "What was that?"
+      - "Did you hear that too?"
+      - "New dog? Must check"
+      - "Something new here…"
+      - "I smell something…."
+      - "This is overwhelming"
+      - "Too much happening"
+      - "I don't like this place"
+    
+    "Stressed":
+      - "I need space"
+      - "Who are you?"
+      - "What are you doing?"
+      - "I don't feel good"
+      - "I don't like this"
+      - "I don't want to"
+      - "I've had enough"
+      - "Please don't leave"
+      - "This is overwhelming"
+      - "Get me out of here!"
+    
+    "Fearful/Anxious":
+      - "What are we doing?"
+      - "Go away"
+      - "This scares me"
+      - "Please don't leave"
+      - "Something's wrong here"
+      - "What was that?!"
+      - "I'm scared"
+      - "I don't trust you!"
+      - "Too many strangers"
+      - "I don't know about you"
+      - "You look scary"
+      - "I'm intimidated"
+    
+    "Aggressive/Threatening":
+      - "Go away"
+      - "This is mine, don't touch"
+      - "I feel threatened"
+      - "I'm the boss around here"
+      - "Final warning, buddy"
+      - "I'll defend what's mine"
+      - "Don't touch my human"
+      - "Cross this line. I dare."
+      - "Don't test me"
+      - "I've warned you twice"
+      - "Don't think about it."
