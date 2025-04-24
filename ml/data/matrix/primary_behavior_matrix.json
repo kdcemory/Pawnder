@@ -1,0 +1,67 @@
+{
+  "behavioral_states": [
+    {
+      "id": "happy_playful",
+      "name": "Happy/Playful",
+      "danger_score": 1,
+      "friendly_score": 9
+    },
+    {
+      "id": "relaxed",
+      "name": "Relaxed",
+      "danger_score": 1,
+      "friendly_score": 7
+    },
+    {
+      "id": "submissive",
+      "name": "Submissive/Appeasement",
+      "danger_score": 3,
+      "friendly_score": 6
+    },
+    {
+      "id": "curious",
+      "name": "Curiosity/Alertness",
+      "danger_score": 4,
+      "friendly_score": 5
+    },
+    {
+      "id": "stressed",
+      "name": "Stressed",
+      "danger_score": 6,
+      "friendly_score": 3
+    },
+    {
+      "id": "fearful",
+      "name": "Fearful/Anxious",
+      "danger_score": 8,
+      "friendly_score": 2
+    },
+    {
+      "id": "aggressive",
+      "name": "Aggressive/Threatening",
+      "danger_score": 10,
+      "friendly_score": 1
+    }
+  ],
+  "behavior_categories": [
+    {
+      "id": "tail",
+      "name": "Tail Position/Movement",
+      "behaviors": [
+        {
+          "id": "tail_high_stiff",
+          "name": "High & stiff tail",
+          "state_mapping": {
+            "aggressive": 1,
+            "happy_playful": 0,
+            "relaxed": 0,
+            "submissive": 0,
+            "curious": 0,
+            "stressed": 0,
+            "fearful": 0
+          }
+        }
+      ]
+    }
+  ]
+}
