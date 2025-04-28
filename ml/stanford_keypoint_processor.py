@@ -281,7 +281,7 @@ else:
     logger.info(f"Saved keypoints to {keypoint_file}")
     
     # Update annotations for each split
-    for split in ['train', 'val', 'test']:
+    for split in ['train', 'validation', 'test']:
         split_dir = os.path.join(annotations_dir, split)
         if not os.path.exists(split_dir):
             logger.warning(f"Split directory not found: {split_dir}")
