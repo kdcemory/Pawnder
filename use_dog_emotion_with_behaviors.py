@@ -1,7 +1,13 @@
 """
-Dog Emotion Classifier with Behavioral Feature Integration - Updated Version
+Dog Emotion Classifier with Behavioral Feature Integration - Complete Version
 
-This implementation fixes path issues, method ordering, and handles the exact matrix format.
+This implementation includes:
+- Training and model creation
+- Path resolution and data handling
+- Behavioral matrix integration
+- Image and video prediction
+- Detailed behavioral analysis
+- Command-line interface
 """
 
 import os
@@ -18,6 +24,8 @@ import cv2
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix, classification_report
 from pathlib import Path
+import yaml
+import argparse
 
 def fix_image_path_resolution(image_path, base_dir):
     """
@@ -38,8 +46,33 @@ def fix_image_path_resolution(image_path, base_dir):
     VIDEO_FOLDER_MAP = {
         "1": "1",
         "3": "3",
-        "4": "4",
+        "4": "4", 
         "5": "5",
+        "50": "50",
+        "51": "51",
+        "52": "52",
+        "53": "53",
+        "54": "54",
+        "55": "55",
+        "56": "56",
+        "57": "57",
+        "58": "58",
+        "59": "59",
+        "60": "60",
+        "61": "61",
+        "62": "62",
+        "63": "63",
+        "64": "64",
+        "65": "65",
+        "66": "66",
+        "67": "67",
+        "68": "68",
+        "69": "69",
+        "70": "70",
+        "71": "71",
+        "72": "72",
+        "73": "73",
+        "74": "74",
         "m2-res_854p-7": "17",
         "excited": "19",
         "whale eye-2": "20",
@@ -160,8 +193,10 @@ def fix_image_path_resolution(image_path, base_dir):
         if folder is not None:
             # Look for the frame in this folder
             for videos_root in [
-                os.path.join(base_dir, "ml", "Data", "raw", "Videos"),
-                os.path.join(base_dir, "Data", "Raw", "Videos")
+                os.path.join(base_dir, "Data", "raw", "Videos"),
+                os.path.join(base_dir, "Data", "Raw", "Videos"),
+                os.path.join(base_dir, "Data", "processed"),
+                os.path.join(base_dir, "Data", "processed", "all_frames")
             ]:
                 folder_path = os.path.join(videos_root, folder, "images")
                 if os.path.exists(folder_path):
@@ -193,7 +228,7 @@ def fix_image_path_resolution(image_path, base_dir):
         
         # Try the corresponding numeric folder
         for videos_root in [
-            os.path.join(base_dir, "ml", "Data", "raw", "Videos"),
+            os.path.join(base_dir, "Data", "raw", "Videos"),
             os.path.join(base_dir, "Data", "Raw", "Videos")
         ]:
             folder_path = os.path.join(videos_root, numeric_id, "images")
@@ -225,7 +260,7 @@ def fix_image_path_resolution(image_path, base_dir):
         default_folder = default_folders[folder_idx]
         
         for videos_root in [
-            os.path.join(base_dir, "ml", "Data", "raw", "Videos"),
+            os.path.join(base_dir, "Data", "raw", "Videos"),
             os.path.join(base_dir, "Data", "Raw", "Videos")
         ]:
             folder_path = os.path.join(videos_root, default_folder, "images")
@@ -270,8 +305,8 @@ class DogEmotionWithBehaviors:
             self.base_dir = base_dir
             
         # Fixed paths based on the correct directory structure - now includes "ml"
-        self.processed_dir = os.path.join(self.base_dir, "ml", "Data", "processed")
-        self.matrix_dir = os.path.join(self.base_dir, "ml", "Data", "matrix")  # lowercase "matrix"
+        self.processed_dir = os.path.join(self.base_dir, "Data", "processed")
+        self.matrix_dir = os.path.join(self.base_dir, "Data", "matrix")  # lowercase "matrix"
         self.model_dir = os.path.join(self.base_dir, "Models")
         
         # Create models directory if it doesn't exist
@@ -971,7 +1006,10 @@ class DogEmotionWithBehaviors:
         
         # Create data generator class
         class DataGenerator(tf.keras.utils.Sequence):
-            def __init__(self, image_paths, labels, behavior_data, behavior_size, img_size, batch_size, augment, parent):
+            def __init__(self, image_paths, labels, behavior_data, behavior_size, img_size, batch_size, augment, parent, **kwargs):
+                # Fix warning by calling super().__init__
+                super().__init__(**kwargs)
+                
                 self.image_paths = image_paths
                 self.labels = labels
                 self.behavior_data = behavior_data
@@ -1159,9 +1197,9 @@ class DogEmotionWithBehaviors:
                 patience=10,
                 restore_best_weights=True
             ),
-            # Model checkpoints
+            # Model checkpoints - use .keras format
             ModelCheckpoint(
-                os.path.join(model_dir, 'best_model.h5'),
+                os.path.join(model_dir, 'best_model.keras'),
                 monitor='val_accuracy',
                 save_best_only=True,
                 mode='max'
@@ -1205,8 +1243,8 @@ class DogEmotionWithBehaviors:
                 if k in ft_history.history:
                     history.history[k].extend(ft_history.history[k])
         
-        # Save final model
-        self.model.save(os.path.join(model_dir, 'final_model.h5'))
+        # Save final model - use .keras format
+        self.model.save(os.path.join(model_dir, 'final_model.keras'))
         
         # Save class names and behavior columns
         with open(os.path.join(model_dir, 'model_metadata.json'), 'w') as f:
@@ -1230,6 +1268,9 @@ class DogEmotionWithBehaviors:
         
         # Evaluate on test set
         self.evaluate(model_dir)
+        
+        # Save the model in a format compatible with the inference script
+        self.save_model_for_inference(model_dir)
         
         return history, model_dir
     
@@ -1320,8 +1361,10 @@ class DogEmotionWithBehaviors:
         plt.close()
         
         # Generate classification report
+        # Fix warning by setting zero_division parameter
         report = classification_report(
-            y_true, y_pred, target_names=class_names, output_dict=True)
+            y_true, y_pred, target_names=class_names, output_dict=True, zero_division=0
+        )
         
         with open(os.path.join(model_dir, 'classification_report.json'), 'w') as f:
             json.dump(report, f, indent=2)
@@ -1329,7 +1372,7 @@ class DogEmotionWithBehaviors:
         # Print summary
         print(f"Test accuracy: {metrics['accuracy']:.4f}")
         print("Classification report:")
-        print(classification_report(y_true, y_pred, target_names=class_names))
+        print(classification_report(y_true, y_pred, target_names=class_names, zero_division=0))
     
     def plot_training_history(self, history, output_dir):
         """
@@ -1420,7 +1463,7 @@ class DogEmotionWithBehaviors:
         Load a saved model
         
         Args:
-            model_path: Path to saved model file (.h5)
+            model_path: Path to saved model file (.h5 or .keras)
             metadata_path: Path to model metadata file (.json)
             
         Returns:
@@ -1428,7 +1471,8 @@ class DogEmotionWithBehaviors:
         """
         try:
             # Load model
-            self.model = tf.keras.models.load_model(model_path)
+            # Add custom_objects parameter to handle any custom objects
+            self.model = tf.keras.models.load_model(model_path, compile=True)
             print(f"Model loaded from {model_path}")
             
             # Load metadata if provided
@@ -1447,22 +1491,696 @@ class DogEmotionWithBehaviors:
         except Exception as e:
             print(f"Error loading model: {str(e)}")
             return None
+    
+    def save_model_for_inference(self, model_dir=None):
+        """
+        Save the model and metadata in a format compatible with the inference script
+        
+        Args:
+            model_dir: Directory to save the model (default is current model directory)
+        """
+        if self.model is None:
+            raise ValueError("No model to save. Train or load a model first.")
+            
+        if model_dir is None:
+            # Create a new directory with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+            model_dir = os.path.join(self.model_dir, f"dog_emotion_for_inference_{timestamp}")
+            os.makedirs(model_dir, exist_ok=True)
+        
+        # Save the model using .keras format instead of .h5
+        model_path = os.path.join(model_dir, "dog_emotion_model.keras")
+        self.model.save(model_path)
+        
+        # Create a config file
+        config = {
+            "model": {
+                "image_size": [224, 224, 3],
+            },
+            "data": {
+                "base_dir": ".",
+            },
+            "inference": {
+                "confidence_threshold": 0.6,
+                "behavior_threshold": 0.5,
+                "output_dir": "predictions"
+            }
+        }
+        
+        # Save config
+        config_path = os.path.join(model_dir, "config.yaml")
+        with open(config_path, 'w') as f:
+            yaml.dump(config, f)
+        
+        # Save emotion list
+        emotion_list_path = os.path.join(model_dir, "emotion_list.json")
+        with open(emotion_list_path, 'w') as f:
+            json.dump(self.class_names, f)
+        
+        # Copy the behavioral matrix if available
+        if hasattr(self, 'behavior_matrix') and self.behavior_matrix:
+            matrix_path = os.path.join(model_dir, "primary_behavior_matrix.json")
+            with open(matrix_path, 'w') as f:
+                json.dump(self.behavior_matrix, f, indent=2)
+        
+        print(f"Model saved for inference at: {model_dir}")
+        print(f"Use with inference script: python dog_emotion_inference.py --model {model_path} --config {config_path} image <image_path>")
+        
+        return model_dir
+    
+    def predict_video(self, video_path, output_path=None, frame_interval=5):
+        """
+        Predict emotions in a video
+        
+        Args:
+            video_path: Path to the video file
+            output_path: Path to save the output video (optional)
+            frame_interval: Process every Nth frame
+            
+        Returns:
+            dict: Results containing emotion timeline and analysis
+        """
+        # Check if model is loaded
+        if self.model is None:
+            raise ValueError("Model not loaded. Train or load a model first.")
+        
+        # Check if video exists
+        if not os.path.exists(video_path):
+            raise FileNotFoundError(f"Video not found: {video_path}")
+        
+        # Open video
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            raise ValueError(f"Could not open video: {video_path}")
+        
+        # Get video properties
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        
+        # Set up output video if requested
+        if output_path:
+            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+            out = cv2.VideoWriter(
+                output_path,
+                fourcc,
+                fps / frame_interval,  # Adjust output FPS based on frame interval
+                (frame_width, frame_height)
+            )
+        
+        # Process video frames
+        results = {
+            'video_path': video_path,
+            'fps': fps,
+            'total_frames': total_frames,
+            'frames_analyzed': 0,
+            'emotion_timeline': [],
+            'dominant_emotion': None
+        }
+        
+        frame_count = 0
+        emotion_counts = {emotion: 0 for emotion in self.class_names}
+        
+        print(f"Processing video: {video_path}")
+        
+        try:
+            with tqdm(total=total_frames) as pbar:
+                while cap.isOpened():
+                    ret, frame = cap.read()
+                    if not ret:
+                        break
+                    
+                    # Process every Nth frame
+                    if frame_count % frame_interval == 0:
+                        # Convert to RGB
+                        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                        
+                        # Resize and preprocess image
+                        resized_frame = cv2.resize(frame_rgb, (224, 224))
+                        preprocessed_frame = resized_frame.astype(np.float32) / 255.0
+                        
+                        # Create input for model
+                        inputs = {
+                            'image_input': np.expand_dims(preprocessed_frame, axis=0),
+                            'behavior_input': np.zeros((1, len(self.behavior_columns) if self.behavior_columns else 1))
+                        }
+                        
+                        # Predict
+                        predictions = self.model.predict(inputs, verbose=0)
+                        
+                        # Get predicted class and confidence
+                        predicted_idx = np.argmax(predictions[0])
+                        predicted_class = self.class_names[predicted_idx]
+                        confidence = float(predictions[0][predicted_idx])
+                        
+                        # Count for dominant emotion
+                        emotion_counts[predicted_class] += 1
+                        
+                        # Add to timeline
+                        results['emotion_timeline'].append({
+                            'frame': frame_count,
+                            'time': frame_count / fps,
+                            'emotion': predicted_class,
+                            'confidence': confidence,
+                            'all_emotions': {
+                                self.class_names[i]: float(predictions[0][i])
+                                for i in range(len(self.class_names))
+                            }
+                        })
+                        
+                        # Update count of analyzed frames
+                        results['frames_analyzed'] += 1
+                        
+                        # Draw results on frame if saving output
+                        if output_path:
+                            # Add text with prediction
+                            text = f"{predicted_class}: {confidence:.2f}"
+                            cv2.putText(
+                                frame, text, (10, 30),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2
+                            )
+                            
+                            # Write frame to output video
+                            out.write(frame)
+                    
+                    frame_count += 1
+                    pbar.update(1)
+        
+        finally:
+            # Release resources
+            cap.release()
+            if output_path and 'out' in locals():
+                out.release()
+        
+        # Calculate dominant emotion
+        if results['frames_analyzed'] > 0:
+            dominant_emotion = max(emotion_counts.items(), key=lambda x: x[1])[0]
+            results['dominant_emotion'] = dominant_emotion
+            
+            # Generate emotion distribution
+            results['emotion_distribution'] = {
+                emotion: count / results['frames_analyzed']
+                for emotion, count in emotion_counts.items()
+            }
+            
+            # Analyze emotion transitions
+            results['emotion_trends'] = self._analyze_emotion_trends(results['emotion_timeline'])
+            
+            # Visualize results
+            self._visualize_video_results(results, video_path)
+        
+        return results
+    
+    def _analyze_emotion_trends(self, emotion_timeline):
+        """
+        Analyze trends in emotions over time
+        
+        Args:
+            emotion_timeline: List of emotion predictions with timestamps
+            
+        Returns:
+            dict: Emotion trends analysis
+        """
+        if not emotion_timeline:
+            return {}
+        
+        # Initialize trends dictionary
+        trends = {
+            'transitions': [],
+            'stable_periods': [],
+            'emotion_changes_per_minute': 0
+        }
+        
+        # Track emotion transitions
+        prev_emotion = None
+        current_streak = {'emotion': None, 'start_time': 0, 'end_time': 0, 'duration': 0}
+        
+        for i, entry in enumerate(emotion_timeline):
+            current_emotion = entry['emotion']
+            current_time = entry['time']
+            
+            # First frame, initialize
+            if i == 0:
+                prev_emotion = current_emotion
+                current_streak = {
+                    'emotion': current_emotion,
+                    'start_time': current_time,
+                    'end_time': current_time,
+                    'duration': 0
+                }
+                continue
+            
+            # If emotion changed, record the transition and start a new streak
+            if current_emotion != prev_emotion:
+                # Record the transition
+                trends['transitions'].append({
+                    'from': prev_emotion,
+                    'to': current_emotion,
+                    'time': current_time
+                })
+                
+                # End the previous streak
+                current_streak['end_time'] = current_time
+                current_streak['duration'] = current_streak['end_time'] - current_streak['start_time']
+                
+                # Only record if duration is significant
+                if current_streak['duration'] > 1.0:  # More than 1 second
+                    trends['stable_periods'].append(current_streak)
+                
+                # Start a new streak
+                current_streak = {
+                    'emotion': current_emotion,
+                    'start_time': current_time,
+                    'end_time': current_time,
+                    'duration': 0
+                }
+            else:
+                # Update the end time of the current streak
+                current_streak['end_time'] = current_time
+            
+            prev_emotion = current_emotion
+        
+        # Add the last streak if it exists
+        if current_streak['emotion'] is not None:
+            current_streak['duration'] = current_streak['end_time'] - current_streak['start_time']
+            if current_streak['duration'] > 1.0:  # More than 1 second
+                trends['stable_periods'].append(current_streak)
+        
+        # Calculate emotion changes per minute
+        total_time = emotion_timeline[-1]['time'] - emotion_timeline[0]['time']
+        if total_time > 0:
+            changes_per_minute = (len(trends['transitions']) / total_time) * 60
+            trends['emotion_changes_per_minute'] = changes_per_minute
+        
+        # Find the most stable emotions (longest periods)
+        if trends['stable_periods']:
+            trends['stable_periods'] = sorted(
+                trends['stable_periods'],
+                key=lambda x: x['duration'],
+                reverse=True
+            )
+            trends['most_stable_emotion'] = trends['stable_periods'][0]['emotion']
+        
+        return trends
+    
+    def _visualize_video_results(self, results, video_path):
+        """
+        Visualize results from video analysis
+        
+        Args:
+            results: Video analysis results
+            video_path: Path to the original video
+        """
+        if not results['emotion_timeline']:
+            print("No data to visualize")
+            return
+        
+        # Create output directory if it doesn't exist
+        output_dir = os.path.join(self.base_dir, "predictions")
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Get base filename without extension
+        base_name = os.path.splitext(os.path.basename(video_path))[0]
+        
+        # Create figure for emotion timeline
+        plt.figure(figsize=(15, 10))
+        
+        # Plot 1: Emotion Timeline
+        plt.subplot(2, 1, 1)
+        
+        # Extract times and emotions
+        times = [entry['time'] for entry in results['emotion_timeline']]
+        emotions = [entry['emotion'] for entry in results['emotion_timeline']]
+        
+        # Get unique emotions
+        unique_emotions = list(set(emotions))
+        
+        # Create a mapping of emotions to numeric values
+        emotion_to_num = {emotion: i for i, emotion in enumerate(unique_emotions)}
+        
+        # Convert emotions to numeric values for plotting
+        emotion_values = [emotion_to_num[emotion] for emotion in emotions]
+        
+        # Plot the emotion timeline
+        plt.plot(times, emotion_values, 'o-', markersize=3)
+        
+        # Set y-ticks to emotion names
+        plt.yticks(
+            list(range(len(unique_emotions))),
+            unique_emotions
+        )
+        
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('Emotion')
+        plt.title(f'Emotion Timeline for {base_name}')
+        plt.grid(True, alpha=0.3)
+        
+        # Plot 2: Emotion Distribution
+        plt.subplot(2, 1, 2)
+        
+        # Sort emotions by frequency
+        sorted_emotions = sorted(
+            results['emotion_distribution'].items(),
+            key=lambda x: x[1],
+            reverse=True
+        )
+        
+        emotion_names = [item[0] for item in sorted_emotions]
+        emotion_freqs = [item[1] for item in sorted_emotions]
+        
+        # Only show top 10 emotions if there are more
+        if len(emotion_names) > 10:
+            emotion_names = emotion_names[:10]
+            emotion_freqs = emotion_freqs[:10]
+        
+        # Plot the distribution
+        bars = plt.barh(emotion_names, emotion_freqs, color='skyblue')
+        
+        # Highlight dominant emotion
+        for i, name in enumerate(emotion_names):
+            if name == results['dominant_emotion']:
+                bars[i].set_color('green')
+        
+        plt.xlabel('Frequency')
+        plt.ylabel('Emotion')
+        plt.title('Emotion Distribution')
+        plt.xlim(0, 1)
+        plt.grid(True, alpha=0.3)
+        
+        plt.tight_layout()
+        
+        # Save the figure
+        output_path = os.path.join(output_dir, f"{base_name}_analysis.png")
+        plt.savefig(output_path, dpi=300)
+        plt.close()
+        
+        print(f"Video analysis visualization saved to {output_path}")
+        
+        # Save results as JSON
+        json_path = os.path.join(output_dir, f"{base_name}_analysis.json")
+        
+        # Create a simplified version of results for JSON (exclude large arrays)
+        json_results = {
+            'video_path': results['video_path'],
+            'fps': results['fps'],
+            'total_frames': results['total_frames'],
+            'frames_analyzed': results['frames_analyzed'],
+            'dominant_emotion': results['dominant_emotion'],
+            'emotion_distribution': results['emotion_distribution'],
+            'emotion_changes_per_minute': results.get('emotion_trends', {}).get('emotion_changes_per_minute', 0),
+            'most_stable_emotion': results.get('emotion_trends', {}).get('most_stable_emotion', None)
+        }
+        
+        with open(json_path, 'w') as f:
+            json.dump(json_results, f, indent=2)
+        
+        print(f"Video analysis results saved to {json_path}")
+    
+    def generate_behavioral_report(self, predicted_class, confidence, all_predictions):
+        """
+        Generate a detailed behavioral report based on the prediction result
+        
+        Args:
+            predicted_class: Predicted emotion class
+            confidence: Confidence score
+            all_predictions: Dictionary with all emotion predictions
+            
+        Returns:
+            str: Behavioral report text
+        """
+        if not hasattr(self, 'behavior_matrix') or not self.behavior_matrix:
+            return "Behavioral matrix not available. Unable to generate detailed behavioral report."
+        
+        # Determine emotion category
+        standard_emotion = self.class_name_mapping.get(predicted_class, predicted_class)
+        
+        # Initialize report
+        report = f"# Dog Emotion Analysis: {standard_emotion}\n\n"
+        report += f"Confidence: {confidence:.2f}\n\n"
+        
+        # Add other possible emotions
+        report += "## Top Emotions Detected\n\n"
+        for emotion, prob in sorted(all_predictions.items(), key=lambda x: x[1], reverse=True)[:3]:
+            report += f"- {emotion}: {prob:.2f}\n"
+        
+        report += "\n## Behavioral Analysis\n\n"
+        
+        # Add behavioral state information
+        emotion_state = None
+        danger_scale = None
+        friendliness_scale = None
+        category = None
+        
+        # Map standard emotion to behavioral state
+        emotion_to_state_map = {
+            "Happy_Playful": "Happy/Playful",
+            "Relaxed": "Relaxed",
+            "Submissive_Appeasement": "Submissive/Appeasement",
+            "Curiosity_Alertness": "Curiosity/Alertness",
+            "Stressed": "Stressed",
+            "Fearful_Anxious": "Fearful/Anxious",
+            "Aggressive_Threatening": "Aggressive/Threatening"
+        }
+        
+        state_name = emotion_to_state_map.get(standard_emotion, standard_emotion)
+        
+        # Find state in behavior matrix
+        if "behavioral_states" in self.behavior_matrix:
+            for state in self.behavior_matrix["behavioral_states"]:
+                if state["name"] == state_name:
+                    emotion_state = state
+                    break
+        
+        # Add state information if found
+        if emotion_state:
+            report += f"### Behavioral State: {emotion_state.get('name')}\n\n"
+            report += f"**Description:** {emotion_state.get('description')}\n\n"
+            
+            if 'detailed_description' in emotion_state:
+                report += f"**Detailed Description:** {emotion_state.get('detailed_description')}\n\n"
+            
+            report += f"**Category:** {emotion_state.get('category')}\n\n"
+            
+            # Add category description
+            category_descriptions = {
+                "Safe": "Generally safe, minimum risk of aggressive behavior, good for children and inexperienced handlers, main requirement is calm, gentle interaction.",
+                "Caution": "Safe for people with basic dog reading skills, requires understanding of canine body language, main risk comes from misreading or startling the dog, should supervise children's interactions.",
+                "Concerning": "Requires experienced handling, need understanding of de-escalation techniques, should be monitored for signs of escalation, not suitable for interaction with children or inexperienced handlers, may need behavioral intervention if chronic.",
+                "High Danger": "Requires professional or highly experienced handling, high risk of defensive reactions, need clear understanding of trigger management, should be handled with safety protocols in place, require behavior modification programs."
+            }
+            
+            if emotion_state.get('category') in category_descriptions:
+                report += f"**Category Description:** {category_descriptions[emotion_state.get('category')]}\n\n"
+            
+            report += f"**Danger Scale:** {emotion_state.get('danger_scale')}/10\n\n"
+            report += f"**Friendliness Scale:** {emotion_state.get('friendliness_scale')}/10\n\n"
+            
+            # Add expected behaviors for this state
+            report += f"### Expected Behavioral Indicators\n\n"
+            
+            state_id = emotion_state.get('id')
+            if state_id and "behavior_categories" in self.behavior_matrix:
+                for category in self.behavior_matrix["behavior_categories"]:
+                    behaviors_in_category = []
+                    
+                    for behavior in category.get("behaviors", []):
+                        if state_id in behavior.get("state_mapping", {}) and behavior["state_mapping"][state_id] == 1:
+                            behaviors_in_category.append(behavior["name"])
+                            
+                    if behaviors_in_category:
+                        report += f"**{category['name']}:**\n"
+                        for behavior in behaviors_in_category:
+                            report += f"- {behavior}\n"
+                        report += "\n"
+            
+            # Add handling guidelines based on category
+            report += f"### Handling Guidelines\n\n"
+            
+            handling_guidelines = {
+                "Safe": [
+                    "This dog is considered safe to handle.",
+                    "Suitable for interaction with children and inexperienced handlers.",
+                    "Maintain calm, gentle interactions.",
+                    "Monitor for any signs of stress or discomfort."
+                ],
+                "Caution": [
+                    "This dog is safe for people with basic dog reading skills.",
+                    "Understanding of canine body language is required.",
+                    "Main risk comes from misreading or startling the dog.",
+                    "Adult supervision is required for any interaction with children.",
+                    "Pay attention to environmental factors that might cause stress."
+                ],
+                "Concerning": [
+                    "This dog requires experienced handling.",
+                    "Understanding of de-escalation techniques is necessary.",
+                    "Monitor for signs of escalation in behavior.",
+                    "Not suitable for interaction with children or inexperienced handlers.",
+                    "May need behavioral intervention if this state is chronic.",
+                    "Avoid high-stress environments and interactions."
+                ],
+                "High Danger": [
+                    "This dog requires professional or highly experienced handling.",
+                    "There is a high risk of defensive reactions.",
+                    "Clear understanding of trigger management is essential.",
+                    "Safety protocols should be in place for all interactions.",
+                    "Behavior modification programs are recommended.",
+                    "Do not allow interaction with children or inexperienced handlers.",
+                    "Consider consulting with a certified animal behaviorist."
+                ]
+            }
+            
+            if emotion_state.get('category') in handling_guidelines:
+                for guideline in handling_guidelines[emotion_state.get('category')]:
+                    report += f"- {guideline}\n"
+        
+        return report
+    
+    def detect_behaviors_from_image(self, image_path):
+        """
+        Detect behavioral indicators from an image using computer vision
+        
+        Args:
+            image_path: Path to the image
+            
+        Returns:
+            dict: Dictionary of detected behaviors with confidence scores
+        """
+        # This is a placeholder for a real behavior detection implementation
+        # In practice, you would use computer vision models to detect these features
+        
+        # For now, return empty dict
+        detected_behaviors = {}
+        
+        # In a real implementation, you would:
+        # 1. Detect dog pose (ears, tail, mouth, eyes, etc.)
+        # 2. Analyze the pose to identify behavioral indicators
+        # 3. Return a dictionary of behaviors with confidence scores
+        
+        return detected_behaviors
 
 
-# Usage example
+# Main function for command-line use
 if __name__ == "__main__":
+    # Create argument parser
+    parser = argparse.ArgumentParser(description='Dog Emotion Classifier')
+    subparsers = parser.add_subparsers(dest='command', help='Command')
+    
+    # Train command
+    train_parser = subparsers.add_parser('train', help='Train the model')
+    train_parser.add_argument('--epochs', type=int, default=50, help='Number of epochs')
+    train_parser.add_argument('--batch-size', type=int, default=32, help='Batch size')
+    train_parser.add_argument('--no-fine-tune', action='store_true', help='Disable fine-tuning')
+    
+    # Predict image command
+    predict_parser = subparsers.add_parser('predict-image', help='Predict emotion from an image')
+    predict_parser.add_argument('--model', type=str, required=True, help='Path to model file')
+    predict_parser.add_argument('--metadata', type=str, help='Path to metadata file')
+    predict_parser.add_argument('--image', type=str, required=True, help='Path to image file')
+    predict_parser.add_argument('--report', action='store_true', help='Generate a behavioral report')
+    
+    # Predict video command
+    video_parser = subparsers.add_parser('predict-video', help='Predict emotions in a video')
+    video_parser.add_argument('--model', type=str, required=True, help='Path to model file')
+    video_parser.add_argument('--metadata', type=str, help='Path to metadata file')
+    video_parser.add_argument('--video', type=str, required=True, help='Path to video file')
+    video_parser.add_argument('--output', type=str, help='Path to save output video')
+    video_parser.add_argument('--frame-interval', type=int, default=5, help='Process every Nth frame')
+    
+    # Save for inference command
+    save_parser = subparsers.add_parser('save-for-inference', help='Save model for use with inference script')
+    save_parser.add_argument('--model', type=str, required=True, help='Path to model file')
+    save_parser.add_argument('--metadata', type=str, required=True, help='Path to metadata file')
+    save_parser.add_argument('--output', type=str, help='Output directory')
+    
+    # Parse arguments
+    args = parser.parse_args()
+    
     # Create classifier
     classifier = DogEmotionWithBehaviors()
     
-    # Try to load behavior matrix
-    matrix_path = os.path.join(classifier.matrix_dir, "primary_behavior_matrix.json")
-    matrix_loaded = classifier.load_behavior_matrix(matrix_path)
+    # Handle commands
+    if args.command == 'train':
+        # Load behavior matrix
+        matrix_path = os.path.join(classifier.matrix_dir, "primary_behavior_matrix.json")
+        matrix_loaded = classifier.load_behavior_matrix(matrix_path)
+        
+        # Train model
+        history, model_dir = classifier.train(
+            epochs=args.epochs,
+            batch_size=args.batch_size,
+            fine_tune=not args.no_fine_tune
+        )
+        
+        print(f"Training completed. Model saved to {model_dir}")
     
-    # Train model
-    history, model_dir = classifier.train(
-        epochs=50,
-        batch_size=32,
-        fine_tune=True
-    )
+    elif args.command == 'predict-image':
+        # Load model
+        classifier.load_model(args.model, args.metadata)
+        
+        # Load behavior matrix
+        matrix_path = os.path.join(classifier.matrix_dir, "primary_behavior_matrix.json")
+        matrix_loaded = classifier.load_behavior_matrix(matrix_path)
+        
+        # Predict
+        predicted_class, confidence, all_predictions = classifier.predict_image(args.image)
+        
+        # Print results
+        print(f"Predicted emotion: {predicted_class}")
+        print(f"Confidence: {confidence:.2f}")
+        print("All predictions:")
+        for emotion, prob in sorted(all_predictions.items(), key=lambda x: x[1], reverse=True):
+            print(f"  {emotion}: {prob:.4f}")
+        
+        # Generate behavioral report if requested
+        if args.report:
+            report = classifier.generate_behavioral_report(predicted_class, confidence, all_predictions)
+            print("\nBehavioral Report:")
+            print(report)
+            
+            # Save report to file
+            output_dir = os.path.join(classifier.base_dir, "predictions")
+            os.makedirs(output_dir, exist_ok=True)
+            
+            base_name = os.path.splitext(os.path.basename(args.image))[0]
+            report_path = os.path.join(output_dir, f"{base_name}_behavioral_report.md")
+            
+            with open(report_path, 'w') as f:
+                f.write(report)
+                
+            print(f"\nBehavioral report saved to {report_path}")
     
-    print(f"Training completed. Model saved to {model_dir}")
+    elif args.command == 'predict-video':
+        # Load model
+        classifier.load_model(args.model, args.metadata)
+        
+        # Load behavior matrix
+        matrix_path = os.path.join(classifier.matrix_dir, "primary_behavior_matrix.json")
+        matrix_loaded = classifier.load_behavior_matrix(matrix_path)
+        
+        # Predict video
+        results = classifier.predict_video(
+            video_path=args.video,
+            output_path=args.output,
+            frame_interval=args.frame_interval
+        )
+        
+        # Print results
+        print(f"Dominant emotion: {results['dominant_emotion']}")
+        print(f"Frames analyzed: {results['frames_analyzed']}")
+        print(f"Emotion changes per minute: {results.get('emotion_trends', {}).get('emotion_changes_per_minute', 0):.2f}")
+        
+    elif args.command == 'save-for-inference':
+        # Load model
+        classifier.load_model(args.model, args.metadata)
+        
+        # Load behavior matrix
+        matrix_path = os.path.join(classifier.matrix_dir, "primary_behavior_matrix.json")
+        matrix_loaded = classifier.load_behavior_matrix(matrix_path)
+        
+        # Save for inference
+        output_dir = classifier.save_model_for_inference(args.output)
+        print(f"Model saved for inference at: {output_dir}")
+        
+    else:
+        parser.print_help()
