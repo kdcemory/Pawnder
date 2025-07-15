@@ -1,0 +1,38 @@
+﻿{
+  "indexes": [
+    {
+      "collectionGroup": "predictions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "userId", "order": "ASCENDING"},
+        {"fieldPath": "timestamp", "order": "DESCENDING"}
+      ]
+    },
+    {
+      "collectionGroup": "predictions", 
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "userId", "order": "ASCENDING"},
+        {"fieldPath": "emotion", "order": "ASCENDING"},
+        {"fieldPath": "timestamp", "order": "DESCENDING"}
+      ]
+    },
+    {
+      "collectionGroup": "predictions",
+      "queryScope": "COLLECTION", 
+      "fields": [
+        {"fieldPath": "userId", "order": "ASCENDING"},
+        {"fieldPath": "confidence", "order": "DESCENDING"},
+        {"fieldPath": "timestamp", "order": "DESCENDING"}
+      ]
+    },
+    {
+      "collectionGroup": "dog_profiles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "ownerId", "order": "ASCENDING"},
+        {"fieldPath": "createdAt", "order": "DESCENDING"}
+      ]
+    }
+  ]
+}

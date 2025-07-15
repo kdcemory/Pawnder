@@ -1,0 +1,140 @@
+{
+  "model_path": "C:\\Users\\kelly\\Documents\\GitHub\\Pawnder\\Models\\enhanced_dog_emotion_20250525-134150\\best_model.keras",
+  "analysis_date": "2025-05-26 16:19:44",
+  "overall_metrics": {
+    "test_accuracy": 0.13745130598545074,
+    "test_loss": 5.962700843811035,
+    "total_samples": 3594
+  },
+  "confidence_metrics": {
+    "average_confidence": 0.8935903310775757,
+    "confidence_std": 0.15611858665943146,
+    "min_confidence": 0.310069739818573,
+    "max_confidence": 1.0
+  },
+  "per_class_metrics": [
+    {
+      "class": "Aggressive/Threatening",
+      "accuracy": 0.43434343434343436,
+      "support": 396,
+      "correct_predictions": 172,
+      "total_predictions": 177
+    },
+    {
+      "class": "Curiosity/Alertness",
+      "accuracy": 0.8204022988505747,
+      "support": 696,
+      "correct_predictions": 571,
+      "total_predictions": 873
+    },
+    {
+      "class": "Fearful/Anxious",
+      "accuracy": 0.7962529274004684,
+      "support": 427,
+      "correct_predictions": 340,
+      "total_predictions": 498
+    },
+    {
+      "class": "Happy/Playful",
+      "accuracy": 0.8790613718411552,
+      "support": 554,
+      "correct_predictions": 487,
+      "total_predictions": 759
+    },
+    {
+      "class": "Relaxed",
+      "accuracy": 0.43665158371040724,
+      "support": 442,
+      "correct_predictions": 193,
+      "total_predictions": 208
+    },
+    {
+      "class": "Stressed",
+      "accuracy": 0.8696498054474708,
+      "support": 514,
+      "correct_predictions": 447,
+      "total_predictions": 652
+    },
+    {
+      "class": "Submissive/Appeasement",
+      "accuracy": 0.6920353982300885,
+      "support": 565,
+      "correct_predictions": 391,
+      "total_predictions": 427
+    }
+  ],
+  "confusion_matrix": [
+    [
+      172,
+      79,
+      70,
+      25,
+      0,
+      47,
+      3
+    ],
+    [
+      1,
+      571,
+      32,
+      10,
+      7,
+      57,
+      18
+    ],
+    [
+      0,
+      56,
+      340,
+      19,
+      0,
+      10,
+      2
+    ],
+    [
+      0,
+      40,
+      3,
+      487,
+      3,
+      16,
+      5
+    ],
+    [
+      1,
+      48,
+      9,
+      135,
+      193,
+      48,
+      8
+    ],
+    [
+      0,
+      41,
+      4,
+      18,
+      4,
+      447,
+      0
+    ],
+    [
+      3,
+      38,
+      40,
+      65,
+      1,
+      27,
+      391
+    ]
+  ],
+  "class_names": [
+    "Aggressive/Threatening",
+    "Curiosity/Alertness",
+    "Fearful/Anxious",
+    "Happy/Playful",
+    "Relaxed",
+    "Stressed",
+    "Submissive/Appeasement"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "model_info": {
+    "original_file": "C:\\Users\\kelly\\Documents\\GitHub\\Pawnder\\Models\\enhanced_dog_emotion_20250525-134150\\best_model.keras",
+    "file_format": ".keras",
+    "input_shapes": [
+      [
+        null,
+        46
+      ],
+      [
+        null,
+        224,
+        224,
+        3
+      ]
+    ],
+    "input_names": [
+      "behavior_input",
+      "image_input"
+    ],
+    "output_shapes": [
+      [
+        null,
+        7
+      ]
+    ],
+    "output_names": [
+      "dense_4/Softmax:0"
+    ],
+    "class_names": [
+      "Aggressive/Threatening",
+      "Curiosity/Alertness",
+      "Fearful/Anxious",
+      "Happy/Playful",
+      "Relaxed",
+      "Stressed",
+      "Submissive/Appeasement"
+    ],
+    "model_type": "enhanced_dog_emotion_recognition"
+  },
+  "preprocessing": {
+    "image_size": [
+      224,
+      224,
+      3
+    ],
+    "normalization": "0-1 range",
+    "behavior_input_size": 46,
+    "note": "Behavior input size detected from model architecture"
+  },
+  "export_info": {
+    "export_date": "2025-05-28 11:03:03.616138",
+    "tensorflow_version": "2.10.0",
+    "export_format": "SavedModel"
+  }
+}

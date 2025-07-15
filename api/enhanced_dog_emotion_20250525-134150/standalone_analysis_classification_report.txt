@@ -1,0 +1,24 @@
+DOG EMOTION CLASSIFICATION ANALYSIS REPORT
+==================================================
+
+Model Path: C:\Users\kelly\Documents\GitHub\Pawnder\Models\enhanced_dog_emotion_20250525-134150\best_model.keras
+Analysis Date: 2025-05-26 16:18:21
+
+Test Accuracy: 0.1375 (13.75%)
+Test Loss: 5.9627
+Total Test Samples: 3594
+
+DETAILED CLASSIFICATION REPORT:
+                        precision    recall  f1-score   support
+
+Aggressive/Threatening     0.9718    0.4343    0.6003       396
+   Curiosity/Alertness     0.6541    0.8204    0.7279       696
+       Fearful/Anxious     0.6827    0.7963    0.7351       427
+         Happy/Playful     0.6416    0.8791    0.7418       554
+               Relaxed     0.9279    0.4367    0.5938       442
+              Stressed     0.6856    0.8696    0.7667       514
+Submissive/Appeasement     0.9157    0.6920    0.7883       565
+
+              accuracy                         0.7237      3594
+             macro avg     0.7828    0.7041    0.7077      3594
+          weighted avg     0.7699    0.7237    0.7154      3594

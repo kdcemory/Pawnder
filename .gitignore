@@ -1,0 +1,111 @@
+###############################################################################
+#  Pawnder — master .gitignore
+#  (Python • FlutterFlow • Firebase • ML • Windows/OneDrive)
+###############################################################################
+
+############################
+# 1.  BIG STUFF TO EXCLUDE #
+############################
+# Datasets & models
+Data/
+Models/
+*.h5
+*.keras
+*.ckpt
+*.pth
+*.tflite
+*.pb
+*.onnx
+*.zip
+
+# Cloud secrets / service keys
+firebase/serviceAccountKey.json
+*.pem
+*.p12
+*.key
+*.json-secret
+*.env
+
+# OneDrive conflict & temp files
+~$*
+*.tmp
+*.bak
+*.copy
+* - Copy.*
+*.gid*
+
+############################
+# 2.  PYTHON / PIP / CONDA #
+############################
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+.env
+.venv
+env/
+venv/
+
+############################
+# 3.  MACHINE‑LEARNING     #
+############################
+# Jupyter / matplotlib / tensorboard
+.ipynb_checkpoints/
+runs/                # common TB logs
+*.log
+*.tensorboard*
+
+############################
+# 4.  FLUTTER / FLUTTERFLOW #
+############################
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+build/
+ios/Pods/
+android/.gradle/
+android/app/build/
+
+############################
+# 5.  NODE / FRONT‑END     #
+############################
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.lock
+
+############################
+# 6.  FIREBASE CONFIGS     #
+############################
+firebase/.firebaserc.local
+firebase/*.runtimeconfig.json
+
+############################
+# 7.  EDITOR & OS JUNK     #
+############################
+# macOS / Windows
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# VS Code / JetBrains
+.vscode/
+.idea/
+*.code-workspace
+
+# Misc
+*.swp
+*.swo
+*.orig
+*.tmp.*
+############################
+# END #
+############################

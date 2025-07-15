@@ -1,0 +1,6 @@
+data:
+  base_dir: "C:\\Users\\kelly\\Documents\\GitHub\\Pawnder"
+model:
+  image_size: [224, 224, 3]
+inference:
+  confidence_threshold: 0.6

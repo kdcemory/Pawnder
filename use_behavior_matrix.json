@@ -1,0 +1,488 @@
+{
+  "peimary emotions": [
+    "Happy/Playful",
+    "Relaxed",
+    "Submissive/Appeasement",
+    "Curiosity/Alertness",
+    "Stressed",
+    "Fearful/Anxious",
+    "Aggressive/Threatening"
+  ],
+  "behavioral indicators": {
+    "High and stiff tail": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Low and tucked tail": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Neutral tail with gentle wag": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Rapid wagging tail": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Forward erect ears": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Pinned back ears": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Neutral/relaxed ears": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Moving independent ears": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Relaxed open mouth": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Bared teeth": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 1
+    },
+    "Tight closed mouth": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Relaxed Closed Mouth": {
+      "Happy/Playful": 0,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Panting": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 1
+    },
+    "Drooling": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Lip licking": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Yawning": {
+      "Happy/Playful": 0,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Offensive Pucker": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 1
+    },
+    "Submissive grin": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Relaxed muscles": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Tense muscles": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Lowered body": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Tall forward stance": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Head Tilt": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Belly Rub Pose": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Moving Away": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Move Forward": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Play bow": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Soft eyes": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Hard stare": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Whale eyes": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Look Away": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Dilated pupils": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Squinting or blinking": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Fluid movement": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Packing or restlessness": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 1,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Slow deliberate movement": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Bouncy/Playful": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Marking/patrolling": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Attention Seeking": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 0,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Displacement behaviors": {
+      "Happy/Playful": 0,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 1,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 1
+    },
+    "Social approach": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 0,
+      "Aggressive/Threatening": 0
+    },
+    "Shaking": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Scratching": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 1,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    },
+    "Soft paw": {
+      "Happy/Playful": 1,
+      "Relaxed": 1,
+      "Submissive/Appeasement": 1,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 0
+    },
+    "Piloerection": {
+      "Happy/Playful": 1,
+      "Relaxed": 0,
+      "Submissive/Appeasement": 0,
+      "Curiosity/Alertness": 1,
+      "Stressed": 0,
+      "Fearful/Anxious": 1,
+      "Aggressive/Threatening": 1
+    }
+  },
+  "what_dog_is_saying": [
+    "Play with me, please",
+    "Give me some attention",
+    "Please, I'm a good dog",
+    "Don't stop",
+    "I love you",
+    "I'm friendly",
+    "I'm ready",
+    "More please",
+    "I love this",
+    "Ball! Ball! Ball!",
+    "Again, let's do it again",
+    "Best day ever!",
+    "Chase me!",
+    "Zoomies time!",
+    "Someone say, walk?!",
+    "Your Home!",
+    "ZZZzzzz",
+    "Just relaxing",
+    "Belly rubs please",
+    "Sunbeams feel amazing",
+    "Food? Im listening",
+    "I love nap o'clock",
+    "This is my happy spot",
+    "Sigh, life is good",
+    "Can we be friends",
+    "Please like me",
+    "Pretty please",
+    "I'll do whatever you say",
+    "You're the boss",
+    "We're cool, right?",
+    "I yield to you",
+    "Okay, you win",
+    "Please don't be mad at me",
+    "Who's there?",
+    "What is that?",
+    "New dog? Must check",
+    "Something new here",
+    "This is overwhelming",
+    "I don't like this place",
+    "I need space",
+    "Who are you?",
+    "What are you doing?",
+    "I don't feel good",
+    "I don't like this",
+    "I don't want to",
+    "I've had enough",
+    "Please don't leave",
+    "Get me out of here!",
+    "What are we doing?",
+    "Go away",
+    "This scares me",
+    "Please don't leave",
+    "Something's wrong here",
+    "I'm scared",
+    "I don't trust you",
+    "Too many strangers",
+    "You look scary",
+    "I'm intimidated",
+    "This is mine, don't touch",
+    "I feel threatened",
+    "I'm the boss around here",
+    "Final warning, buddy",
+    "I'll defend what's mine",
+    "Don't touch my human",
+    "Cross this line. I dare.",
+    "Don't test me",
+    "I gave you final warning, you didn't listen!",
+    "Let's play, but just so we're clear… I'm winning."
+  ]
+}

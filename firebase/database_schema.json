@@ -1,0 +1,81 @@
+{
+  "database_schema": {
+    "users": {
+      "document_id": "user_uid",
+      "fields": {
+        "email": "string",
+        "displayName": "string",
+        "photoURL": "string (optional)",
+        "createdAt": "timestamp",
+        "lastLoginAt": "timestamp",
+        "preferences": {
+          "notifications": "boolean",
+          "dataSharing": "boolean",
+          "theme": "string (light/dark)"
+        },
+        "subscription": {
+          "plan": "string (free/premium)",
+          "expiresAt": "timestamp (optional)"
+        }
+      }
+    },
+    "predictions": {
+      "document_id": "auto_generated",
+      "fields": {
+        "userId": "string (reference to users)",
+        "emotion": "string",
+        "confidence": "number (0-1)",
+        "emotionScore": "number (0-1)",
+        "allEmotions": "map<string, number>",
+        "imageUrl": "string",
+        "imageMetadata": {
+          "size": "number",
+          "dimensions": "map",
+          "uploadedAt": "timestamp"
+        },
+        "timestamp": "timestamp",
+        "modelVersion": "string",
+        "processingTimeMs": "number",
+        "dogProfile": "string (optional reference)",
+        "notes": "string (optional user notes)"
+      }
+    },
+    "user_analytics": {
+      "document_id": "user_uid",
+      "fields": {
+        "totalPredictions": "number",
+        "emotionDistribution": "map<string, number>",
+        "lastActivity": "timestamp",
+        "createdAt": "timestamp",
+        "favoriteEmotions": "array<string>",
+        "streakDays": "number",
+        "monthlyStats": "map<string, map>"
+      }
+    },
+    "dog_profiles": {
+      "document_id": "auto_generated",
+      "fields": {
+        "ownerId": "string (reference to users)",
+        "name": "string",
+        "breed": "string",
+        "age": "number",
+        "profileImageUrl": "string",
+        "description": "string",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp",
+        "predictionCount": "number",
+        "dominantEmotion": "string"
+      }
+    },
+    "app_config": {
+      "document_id": "config_name",
+      "fields": {
+        "mlApiUrl": "string",
+        "supportedEmotions": "array<string>",
+        "appVersion": "string",
+        "maintenanceMode": "boolean",
+        "features": "map<string, boolean>"
+      }
+    }
+  }
+}

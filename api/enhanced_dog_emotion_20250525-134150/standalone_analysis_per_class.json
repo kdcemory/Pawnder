@@ -1,0 +1,51 @@
+[
+  {
+    "class": "Aggressive/Threatening",
+    "accuracy": 0.43434343434343436,
+    "support": 396,
+    "correct_predictions": 172,
+    "total_predictions": 177
+  },
+  {
+    "class": "Curiosity/Alertness",
+    "accuracy": 0.8204022988505747,
+    "support": 696,
+    "correct_predictions": 571,
+    "total_predictions": 873
+  },
+  {
+    "class": "Fearful/Anxious",
+    "accuracy": 0.7962529274004684,
+    "support": 427,
+    "correct_predictions": 340,
+    "total_predictions": 498
+  },
+  {
+    "class": "Happy/Playful",
+    "accuracy": 0.8790613718411552,
+    "support": 554,
+    "correct_predictions": 487,
+    "total_predictions": 759
+  },
+  {
+    "class": "Relaxed",
+    "accuracy": 0.43665158371040724,
+    "support": 442,
+    "correct_predictions": 193,
+    "total_predictions": 208
+  },
+  {
+    "class": "Stressed",
+    "accuracy": 0.8696498054474708,
+    "support": 514,
+    "correct_predictions": 447,
+    "total_predictions": 652
+  },
+  {
+    "class": "Submissive/Appeasement",
+    "accuracy": 0.6920353982300885,
+    "support": 565,
+    "correct_predictions": 391,
+    "total_predictions": 427
+  }
+]
